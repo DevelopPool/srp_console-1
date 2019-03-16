@@ -232,9 +232,6 @@ export default class App extends Component<Props> {
             // console.warn(this.state.NY); // gives new value OK
             // console.warn(this.state.PS); // gives new value OK
 
-            this.JSON_Post();
-
-
             // onPress={() => { this.onGet()}}
 
 

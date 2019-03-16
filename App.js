@@ -26,8 +26,8 @@ import {
 
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import Btn_setup from './app/page/Login/Btn_setup';
-import Btn_Login from './app/page/Login/Btn_Login';
+// import Btn_setup from './app/page/Login/Btn_setup';
+// import Btn_Login from './app/page/Login/Btn_Login';
 
 
 import { createBottomTabNavigator, SafeAreaView, createSwitchNavigator, createStackNavigator, withNavigation } from 'react-navigation';
@@ -166,7 +166,7 @@ class TokenScreen extends React.Component {
           </Text>
             <Btn_Login onPress={this.save_token_code} />
             <Text style={styles.welcome}>  或是 註冊 </Text>
-            <Btn_setup />
+            {/* <Btn_setup /> */}
 
           </View>
 
@@ -564,8 +564,8 @@ export default App = () => <RootStack uriPrefix={prefix} />;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   home: {
