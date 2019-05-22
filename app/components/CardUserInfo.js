@@ -33,9 +33,17 @@ componentWillReceiveProps(nextProps) {
             <Text style={styles.CardUserInfoText}>{"名稱：" + this.props.name}</Text>
             <Text style={styles.CardUserInfoText}>{"性別：" + this.props.gender}</Text>
             <Text style={styles.CardUserInfoText}>{"職稱：" + this.props.workingType}</Text>
-            <Text style={styles.CardUserInfoText}>{"電話號碼：" + this.props.phoneNumber}</Text>
+           
             <Text style={styles.CardUserInfoText}>{"常態組別：" + this.props.team}</Text>
             <Text style={styles.CardUserInfoText}>{"是否全職：" + this.props.verified}</Text>
+            <Text style={styles.CardUserInfoText}>{"電話號碼：" + this.props.phoneNumber}</Text>
+            
+            <Text style={styles.CardUserInfoText}>{"身分證字號：" + this.props.ID}</Text>
+            <Text style={styles.CardUserInfoText}>{"住址：" + this.props.addr}</Text>
+            <Text style={styles.CardUserInfoText}>{"工作年資：起於" + this.props.jobYear+"年"}</Text>
+
+          
+
           </View>
         } />
       </View>

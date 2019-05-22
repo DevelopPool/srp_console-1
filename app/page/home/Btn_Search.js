@@ -43,23 +43,24 @@ componentDidMount() {
   // <TouchableOpacity onPress={() => { this.props.navigation.navigate('Registered') }}>
   <TouchableOpacity onPress={() => { this.componentDidMount()}}>
 
-<View style={styles.searchBox}>
+{/* <View style={styles.searchBox}>
 {this.state.isConnected ? <Icon name={"link"}  style={styles.Icon} />: <Icon name={"unlink"}  style={styles.Icon} />}
 
-          <Text style={styles.searchContent}> 生 態 組 </Text>
+          <Text style={styles.searchContent}> 生態 組 </Text>
           <Text style={styles.welcome}>
-                    {/* 当前网络连接类型： */}
                      {this.state.connectionInfo}
                 </Text>
-          <Text style={styles.welcome}>
+          <Text style={styles.welcome}>｀
 
-                    {/* 当前的网络状态： */}
                     {this.state.isConnected ? '使用中': '沒有網路'}
                 </Text>
-               
-                
-                
+              
 
+        </View> */}
+
+
+        <View style={styles.TitleBox}>
+          <Text style={styles.searchContent}> 生 態 組 </Text>
         </View>
       </TouchableOpacity>
  
@@ -82,14 +83,24 @@ const styles = StyleSheet.create({
     height: 30,
 
   },
+
+  TitleBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width * 0.7,
+    // backgroundColor: '#ededed',
+    height: 30,
+
+  },
   searchIcon: {
     width: 16,
     height: 16,
     marginRight: 6,
   },
   searchContent: {
-    color: '#666',
-    fontSize: 24,
+    color: '#ededed',
+    fontSize: 20,
   },
   });
   

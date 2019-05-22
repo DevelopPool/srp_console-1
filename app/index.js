@@ -38,8 +38,6 @@ import Dispatch from './page/dispatch/Dispatch';
 // import Info from './app/page/home/Dinfo';
 const { width, height } = Dimensions.get('window');
 
-
-
 class index_Screen extends React.Component {
   static navigationOptions = {
     // headerTitle instead of title

@@ -516,6 +516,9 @@ const RootStack = createStackNavigator(
 
 const prefix = 'srpconsole://';
 
+
+export default App = () => <RootStack uriPrefix={prefix} />;
+
 //srpconsole://token/<code>
 
 // const Hello_Stack = createSwitchNavigator(
@@ -540,9 +543,6 @@ const prefix = 'srpconsole://';
 //   Welcome1,
 //   App: RootStack
 // })
-
-export default App = () => <RootStack uriPrefix={prefix} />;
-
 
 // export default class App extends Component<Props> {
 
