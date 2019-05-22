@@ -76,8 +76,15 @@ export default class User extends Component {
             gender: null,
             userToken: "",
             refreshing: false,
+            ID:"A123456789",
+            addr:"司馬庫斯部落",
+            jobYear:"2019",
+
+
         };
     }
+
+ 
     //页面的组件渲染完毕（render）之后执行
     _onRefresh = () => {
         this.setState({refreshing: true});
@@ -153,6 +160,10 @@ export default class User extends Component {
             workingType: info_data.workingType,
             verified: info_data.verified,
             gender: info_data.gender,
+            ID: info_data.ID,
+            addr: info_data.addr,
+            jobYear: info_data.jobYear,
+
         })
     }
     render() {
@@ -183,7 +194,11 @@ export default class User extends Component {
                         gender={this.state.gender}
                         workingType={this.state.workingType}
                         team={this.state.team}
-                        verified={this.state.verified} />
+                        verified={this.state.verified} 
+                        ID={this.state.ID} 
+                        addr={this.state.addr} 
+                        jobYear={this.state.jobYear} 
+                        />
                     {/* <Card_Button /> */}
                     {/* <CardUserLeave /> */}
                 </ScrollView>
