@@ -50,6 +50,8 @@ const leave_type = [
     }, {
       value: "照病",
     }, {
+      value: "兵",
+    },{
       value: "酒",
     }, {
       value: "其他",
