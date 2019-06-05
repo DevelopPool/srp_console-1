@@ -262,25 +262,28 @@ class ApplyLeaveForm extends React.Component {
           transparent={true}
           visible={this.state.startModalVisible}>
           <View style={styles.calendarModal}>
-            <View style={styles.calendarPicker}>
-              <CalendarPicker
-                weekdays={['日', '一', '二', '三', '四', '五', '六']}
-                months={['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']}
-                onDateChange={this.onStartDateChange}
-                todayBackgroundColor="#FFFFFF"
-                previousTitle="<<"
-                nextTitle=">>"
-                width={width * 0.8}
-                selectedDayColor="#7094B1"
-                textStyle={{fontSize: 15}}
-              />
-            </View>
+            <TouchableOpacity style={styles.fullScreenTouch} onPress={() => { this.setStartModalVisible(!this.state.startModalVisible); }}>              
+              <View style={styles.calendarPicker}>
+                <CalendarPicker
+                  weekdays={['日', '一', '二', '三', '四', '五', '六']}
+                  months={['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']}
+                  onDateChange={this.onStartDateChange}
+                  todayBackgroundColor="#FFFFFF"
+                  previousTitle="<<"
+                  nextTitle=">>"
+                  width={width * 0.8}
+                  selectedDayColor="#7094B1"
+                  textStyle={{fontSize: 15}}
+                />
+              </View>
+            </TouchableOpacity>
           </View>
         </Modal>
         <Modal 
           animationType="fade"
           visible={this.state.endModalVisible}>
           <View style={styles.calendarModal}>
+          <TouchableOpacity style={styles.fullScreenTouch} onPress={() => { this.setEndModalVisible(!this.state.endModalVisible); }}>
             <View style={styles.calendarPicker}>
               <CalendarPicker
                 weekdays={['日', '一', '二', '三', '四', '五', '六']}
@@ -294,6 +297,7 @@ class ApplyLeaveForm extends React.Component {
                 textStyle={{fontSize: 15}}
               />
             </View>
+            </TouchableOpacity>
           </View>
         </Modal>
       </View>
@@ -368,6 +372,12 @@ const styles = StyleSheet.create({
     color: "#8D8D8D",
     paddingVertical: 10,
     fontSize: 15,
+  },
+  fullScreenTouch:{
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: 'stretch', 
   },
   calendarModal:{
     flex: 1,

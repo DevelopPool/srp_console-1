@@ -9,7 +9,7 @@
   "dependencies": {
     "moment": "^2.24.0",
     "react": "16.6.3",
-    "react-native": "^0.58.5",
+    "react-native": "^0.59.1",
     "react-native-calendar-picker": "^6.0.0",
     "react-native-calendar-select": "^0.1.2",
     "react-native-camera": "^1.6.4",
