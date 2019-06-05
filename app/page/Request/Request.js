@@ -36,19 +36,21 @@ const leave_type = [
     }, {
       value: "事假",
     }, {
+      value: "休養",
+    }, {
       value: "喪假",
     }, {
-      value: "公假",
-    }, {
       value: "婚假",
+    },{
+      value: "公假",
+    },  {
+      value: "缺席",
     }, {
-      value: "產假",
+      value: "帶病",
     }, {
-      value: "遠端假",
+      value: "照病",
     }, {
-      value: "生理假",
-    }, {
-      value: "育嬰假",
+      value: "酒",
     }, {
       value: "其他",
     }]
