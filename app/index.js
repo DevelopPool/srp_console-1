@@ -91,6 +91,8 @@ class index_Screen extends React.Component {
 
 
 export default createBottomTabNavigator({
+
+
   Bulletin:{screen:Bulletin},
   Dispatch:{screen:Dispatch},
   Request:{screen:Request},

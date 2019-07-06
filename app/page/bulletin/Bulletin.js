@@ -61,6 +61,17 @@ export default class Bulletin extends Component {
     this.state = {
       tabShow: false,
       label: [ '今日工事', '公告'],
+      userData: {
+        phoneNumber: "+886900000000",
+        jobTitle:"未登入使用者",
+        image: " ",
+        name: "未登入使用者",
+        team: "外部人員",
+        workingType: "partTime",
+        verified: true,
+        permission: "Null",
+        gender: "female"
+    },
     };
   }
 
@@ -72,6 +83,44 @@ export default class Bulletin extends Component {
     }, 0)
   }
 
+  JSON_Post = () => {
+    // let url = 'https://asia-northeast1-test-cf2e8.cloudfunctions.net/postjson';
+    let url = 'https://us-central1-my-fuck-awesome-project.cloudfunctions.net/getAnnouncement';
+    fetch(url, {
+      method: 'POST',
+      // headers 加入 json 格式
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "uid":this.state.userToken
+      })
+    }).then((response) => {
+      return response.json();
+    }).then((jsonData) => {
+      // console.warn(jsonData);
+      // console.warn(jsonData.excutionResult);
+    //  info_data = jsonData;
+      // this.JSON_body();
+      if (jsonData.excutionResult=="success"){
+        console.warn(jsonData.announcement);
+        console.warn(this.state.announcement);
+        Alert.alert ("更新成功");
+        this.setState({refreshing: false,isLoading: false,announcement: jsonData.announcement,});
+        console.warn(JSON.stringify(this.state.announcement));
+        }
+        else{
+          Alert.alert ("更新失敗","請檢查網路");
+          this.setState({refreshing: false});
+          // this.forceUpdate();
+        }
+    }).catch((err) => {
+      console.warn('錯誤:', err);
+      Alert.alert ("指派失敗","請檢查網路");
+      this.setState({refreshing: false});
+      // this.forceUpdate();
+    })
+  }
   
 
   // 滑动tab
