@@ -13,6 +13,7 @@ import {
   Button,
   Linking,
   TouchableOpacity,
+  TouchableHighlight,
 
 } from 'react-native';
 import { createBottomTabNavigator, SafeAreaView, createStackNavigator, withNavigation } from 'react-navigation';
@@ -20,6 +21,9 @@ import { Dropdown } from 'react-native-material-dropdown';
 import CheckBox from 'react-native-check-box'
 import Btn_Login from './app/page/Login/Btn_Login';
 import Btn_Phone from './app/page/Login/Btn_Phone';
+
+import LowModal from './app/page/MsgModal/LowModal';
+import LoginModal from './app/page/MsgModal/LoginModal';
 
 import Login from './app/page/Login/Login';
 
@@ -41,7 +45,9 @@ export default class Login_index extends Component {
       text: 'Useless Placeholder',
       name: 'aaaaa',
       phone: 'bbbbb',
+      // userToken: "778TIlaNHBcW1lwvk3dZ1HuTuPv1",
       userToken: "778TIlaNHBcW1lwvk3dZ1HuTuPv1",
+      modalPhoneVisible: false,
 
     };
   }
@@ -222,14 +228,14 @@ export default class Login_index extends Component {
         </View> */}
 
 <Btn_Phone/>
-
+<LowModal/>
 
           < View style={styles.bottmContainer}>
 
           <Btn_Login />
-
       </View>
 
+      <LoginModal/>
 
       </View >
       // </SafeAreaView>
