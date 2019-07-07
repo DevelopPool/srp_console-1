@@ -51,7 +51,7 @@ class LoginModal extends React.Component {
       user: null,
       message: '',
       codeInput: '',
-      phoneNumber: '+886',
+      phoneNumber: '+886910927898',
       confirmResult: null,
       text: 'Useless Placeholder',
       name: 'aaaaa',
@@ -78,11 +78,23 @@ class LoginModal extends React.Component {
     // this.getStorage().done();
     // this.check_ID_Storage().done();
   }
-  
-  onMessage(e) {
-  
-    console.warn(e)
+  check(str) { return str.length > 25 && str.length < 29 && str.match(/[0-9A-Za-z]+/).toString() == str; }
 
+  onMessage(e) {
+    var event =e.nativeEvent;
+    var data = e.nativeEvent.data;
+
+    console.warn("event run")
+    // console.warn(event)
+
+    if (data.length > 25 && data.length < 29 && data.match(/[0-9A-Za-z]+/).toString() == data){
+      console.warn(data)
+
+
+    }
+  
+
+      // var data=JSON.parse(event.data);
 
     // alert(e);
     //+886910927898
