@@ -6,6 +6,7 @@ import {
     Platform, 
     Image,
     Dimensions,
+    AsyncStorage,
     TouchableOpacity,
     Linking, 
     ScrollView,
@@ -61,6 +62,7 @@ export default class Bulletin extends Component {
     this.state = {
       tabShow: false,
       label: [ '今日工事', '公告'],
+      userToken:"",
       userData: {
         phoneNumber: "+886900000000",
         jobTitle:"未登入使用者",
@@ -76,12 +78,29 @@ export default class Bulletin extends Component {
   }
 
   componentDidMount() {
+    this.getStorage().done();
+
     setTimeout(() => {
       this.setState({
         tabShow: true
       });
     }, 0)
   }
+
+  getStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem('userToken');
+      if (value !== null) {
+        console.warn(value);
+        this.setState({ userToken: value });
+        this.JSON_Post();
+        console.warn('再次', await AsyncStorage.getItem('userToken'));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   JSON_Post = () => {
     // let url = 'https://asia-northeast1-test-cf2e8.cloudfunctions.net/postjson';

@@ -88,9 +88,16 @@ class LoginModal extends React.Component {
     // console.warn(event)
 
     if (data.length > 25 && data.length < 29 && data.match(/[0-9A-Za-z]+/).toString() == data){
-      console.warn(data)
-
-
+      console.warn(data);
+       //设置多项
+    var keyValuePairs = [['userToken', data]]
+    AsyncStorage.multiSet(keyValuePairs, function (errs) {
+      if (errs) {
+        //TODO：存储出错
+        return;
+      }
+      console.warn('userToken保存成功!');
+    });
     }
   
 

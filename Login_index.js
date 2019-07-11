@@ -82,11 +82,81 @@ export default class Login_index extends Component {
       }
     });
   }
+  componentDidMount() {
+    //检测网络是否连接
+    // this.getStorage().done();
+    this.check_ID_Storage().done();
+  }
+  check_ID_Storage = async () => {
+    //主動驗證是否登入
+    try {
+      const value = await AsyncStorage.getItem('userToken');
+      console.warn(value);
+
+      if (value !== null) {
+        console.warn(value);
+        console.warn('已登入過', await AsyncStorage.getItem('userToken'));
+        this.props.navigation.push('Home')
+      }
+      else {
+        ///這段有問題...
+        Alert('請登入');
+        console.warn('請登入');
+      }
 
 
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
+  getStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem('userToken');
+      if (value !== null) {
+        console.warn(value);
+        this.setState({ userToken: value });
+        this.JSON_Post();
+        console.warn('每日登入', await AsyncStorage.getItem('userToken'));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
+///每日的登入
+  JSON_Post = () => {
+    // let url = 'https://asia-northeast1-test-cf2e8.cloudfunctions.net/postjson';
+    let url = 'https://us-central1-my-fuck-awesome-project.cloudfunctions.net/checkLogin';
+    fetch(url, {
+      method: 'POST',
+      // headers 加入 json 格式
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "uid":this.state.userToken
+      })
+    }).then((response) => {
+      return response.json();
+    }).then((jsonData) => {
+      // console.warn(jsonData);
+      // console.warn(jsonData.excutionResult);
+    //  info_data = jsonData;
+      // this.JSON_body();
+      if (jsonData.excutionResult=="success"){
+        Alert.alert ("每日登入成功");
+        }
+        else{
+          Alert.alert ("每日登入失敗","請檢查網路");
+        }
+    }).catch((err) => {
+      console.warn('每日登入錯誤:', err);
+      Alert.alert ("每日登入失敗","請檢查網路");
+    })
+  }
+  
 
   _storeData = async () => {
     try {

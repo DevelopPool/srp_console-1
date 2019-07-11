@@ -11,6 +11,7 @@ import {
   ScrollView,
   TextInput,
   Button,
+  AsyncStorage,
   RefreshControl,
   Alert 
 } from 'react-native';
