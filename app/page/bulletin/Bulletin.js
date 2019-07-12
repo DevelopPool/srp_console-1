@@ -63,22 +63,24 @@ export default class Bulletin extends Component {
       tabShow: false,
       label: [ '今日工事', '公告'],
       userToken:"",
-      userData: {
-        phoneNumber: "+886900000000",
-        jobTitle:"未登入使用者",
-        image: " ",
-        name: "未登入使用者",
-        team: "外部人員",
-        workingType: "partTime",
-        verified: true,
-        permission: "Null",
-        gender: "female"
-    },
+      userData:"",
+    //   userData: {
+    //     phoneNumber: "+886900000000",
+    //     jobTitle:"未登入使用者",
+    //     image: " ",
+    //     name: "未登入使用者",
+    //     team: "外部人員",
+    //     workingType: "partTime",
+    //     verified: true,
+    //     permission: "Null",
+    //     gender: "female"
+    // },
     };
   }
 
   componentDidMount() {
-    this.getStorage().done();
+    // this.save();
+    // this.getStorage().done();
 
     setTimeout(() => {
       this.setState({
@@ -86,60 +88,74 @@ export default class Bulletin extends Component {
       });
     }, 0)
   }
+  // save() {
+  //   this.JSON_Post();
+  //   //设置多项
+  //   var keyValuePairs = [['userData', this.state.userData]]
+  //   AsyncStorage.multiSet(keyValuePairs, function (errs) {
+  //     if (errs) {
+  //       //TODO：存储出错
+  //       return;
+  //     }
+  //     console.warn('userToken保存成功!');
+  //     console.warn(this.state.userData);
 
-  getStorage = async () => {
-    try {
-      const value = await AsyncStorage.getItem('userToken');
-      if (value !== null) {
-        console.warn(value);
-        this.setState({ userToken: value });
-        this.JSON_Post();
-        console.warn('再次', await AsyncStorage.getItem('userToken'));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+      
+  //   });
+  // }
+
+  // getStorage = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('userToken');
+  //     if (value !== null) {
+  //       console.warn(value);
+  //       this.setState({ userToken: value });
+  //       this.JSON_Post();
+  //       console.warn('再次', await AsyncStorage.getItem('userToken'));
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
 
-  JSON_Post = () => {
-    // let url = 'https://asia-northeast1-test-cf2e8.cloudfunctions.net/postjson';
-    let url = 'https://us-central1-my-fuck-awesome-project.cloudfunctions.net/getAnnouncement';
-    fetch(url, {
-      method: 'POST',
-      // headers 加入 json 格式
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "uid":this.state.userToken
-      })
-    }).then((response) => {
-      return response.json();
-    }).then((jsonData) => {
-      // console.warn(jsonData);
-      // console.warn(jsonData.excutionResult);
-    //  info_data = jsonData;
-      // this.JSON_body();
-      if (jsonData.excutionResult=="success"){
-        console.warn(jsonData.announcement);
-        console.warn(this.state.announcement);
-        Alert.alert ("更新成功");
-        this.setState({refreshing: false,isLoading: false,announcement: jsonData.announcement,});
-        console.warn(JSON.stringify(this.state.announcement));
-        }
-        else{
-          Alert.alert ("更新失敗","請檢查網路");
-          this.setState({refreshing: false});
-          // this.forceUpdate();
-        }
-    }).catch((err) => {
-      console.warn('錯誤:', err);
-      Alert.alert ("指派失敗","請檢查網路");
-      this.setState({refreshing: false});
-      // this.forceUpdate();
-    })
-  }
+  // JSON_Post = () => {
+  //   // let url = 'https://asia-northeast1-test-cf2e8.cloudfunctions.net/postjson';
+  //   let url = 'https://us-central1-my-fuck-awesome-project.cloudfunctions.net/getUserDetail';
+  //   fetch(url, {
+  //     method: 'POST',
+  //     // headers 加入 json 格式
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({
+  //       "uid":this.state.userToken
+  //     })
+  //   }).then((response) => {
+  //     return response.json();
+  //   }).then((jsonData) => {
+  //     // console.warn(jsonData);
+  //     // console.warn(jsonData.excutionResult);
+  //   //  info_data = jsonData;
+  //     // this.JSON_body();
+  //     if (jsonData.excutionResult=="success"){
+  //       console.warn(jsonData.userData);
+  //       this.setState({userData: jsonData.userData,});
+  //       console.warn(JSON.stringify(this.state.userData));
+  //       // Alert.alert ("userData更新成功");
+
+  //       }
+  //       else{
+  //         Alert.alert ("userData更新失敗","請檢查網路");
+  //         // this.forceUpdate();
+  //       }
+  //   }).catch((err) => {
+  //     console.warn('userData錯誤:', err);
+  //     Alert.alert ("userData指派失敗","請檢查網路");
+  //     // this.setState({refreshing: false});
+  //     // this.forceUpdate();
+  //   })
+  // }
   
 
   // 滑动tab

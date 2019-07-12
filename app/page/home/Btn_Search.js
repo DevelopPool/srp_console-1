@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button,  NetInfo,  StyleSheet,TouchableOpacity,Image,Text,  AsyncStorage  ,View,Dimensions} from 'react-native';
+import { Button, NetInfo, StyleSheet, TouchableOpacity, Image, Text, AsyncStorage, View, Dimensions } from 'react-native';
 import { withNavigation } from 'react-navigation';
 const { width, height } = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -8,34 +8,66 @@ class Btn_Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        isConnected: null,
-        connectionInfo: null,
-        name: "",
-        phone: ""
+      isConnected: null,
+      connectionInfo: null,
+      name: "",
+      phone: "",
+      userData: {
+        phoneNumber: "+886900000000",
+        jobTitle: "未登入使用者",
+        image: " ",
+        name: "未登入使用者",
+        team: "外部人員組",
+        workingType: "partTime",
+        verified: true,
+        permission: "Null",
+        gender: "female"
+      },
     };
-}
+  }
 
-//https://www.jianshu.com/p/4bf6a976659d
-//http://www.hangge.com/blog/cache/detail_1614.html
-//React Native - 使用NetInfo獲取網絡信息（是否聯網、當前網絡狀態）
-clear() {
-  var _that = this;
-  AsyncStorage.clear(function (err) {
-    if (!err) {
-      _that.setState({
-        name: "",
-        phone: ""
-      });
-      alert('存储的数据已清除完毕!');
+  //https://www.jianshu.com/p/4bf6a976659d
+  //http://www.hangge.com/blog/cache/detail_1614.html
+  //React Native - 使用NetInfo獲取網絡信息（是否聯網、當前網絡狀態）
+  clear() {
+    var _that = this;
+    AsyncStorage.clear(function (err) {
+      if (!err) {
+        _that.setState({
+          name: "",
+          phone: ""
+        });
+        alert('存储的数据已清除完毕!');
+      }
+    });
+  }
+
+
+  getStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem('userData');
+      alert(this.state.userData.team);
+
+      if (value !== null) {
+        console.warn(value);
+        this.setState({ userData: value });
+        console.warn('top取得userData', await AsyncStorage.getItem('userData'));
+        console.warn('top取得userData', this.state.userData.team);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  });
-}
+  }
 
+  componentWillReceiveProps(){
+    this.getStorage().done();
 
+  };
 
+  //页面的组件渲染完毕（render）之后执行
+  componentDidMount() {
+    this.getStorage().done();
 
-//页面的组件渲染完毕（render）之后执行
-componentDidMount() {
     // //检测网络是否连接
     // NetInfo.isConnected.fetch().done((isConnected) => {
     //     this.setState({isConnected});
@@ -50,16 +82,16 @@ componentDidMount() {
     // NetInfo.addEventListener('change', (networkType) => {
     //     this.setState({isConnected: networkType})
     // })
-    
-}
+
+  }
   render() {
     return (
-    
-   
-  // <TouchableOpacity onPress={() => { this.props.navigation.navigate('Registered') }}>
-  <TouchableOpacity onPress={() => { this.clear()}}>
 
-{/* <View style={styles.searchBox}>
+
+      // <TouchableOpacity onPress={() => { this.props.navigation.navigate('Registered') }}>
+      <TouchableOpacity onPress={() => { this.clear() }}>
+
+        {/* <View style={styles.searchBox}>
 {this.state.isConnected ? <Icon name={"link"}  style={styles.Icon} />: <Icon name={"unlink"}  style={styles.Icon} />}
 
           <Text style={styles.searchContent}> 生態 組 </Text>
@@ -76,10 +108,10 @@ componentDidMount() {
 
 
         <View style={styles.TitleBox}>
-          <Text style={styles.searchContent}> 生 態 組 </Text>
+          <Text style={styles.searchContent}>{this.state.userData.team}</Text>
         </View>
       </TouchableOpacity>
- 
+
     );
   }
 }
@@ -118,8 +150,8 @@ const styles = StyleSheet.create({
     color: '#ededed',
     fontSize: 20,
   },
-  });
-  
+});
+
 
 // withNavigation returns a component that wraps MyBackButton and passes in the
 // navigation prop

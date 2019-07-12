@@ -44,13 +44,6 @@ class LoginModal extends React.Component {
     };
   }
 
-  componentWillReceiveProps() {
-    //检测网络是否连接
-    // this.getStorage().done();
-    // this.check_ID_Storage().done();
-  }
-  
-
 
   // check_ID_Storage = async () => {
   //   //主動驗證是否登入

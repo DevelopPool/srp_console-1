@@ -68,16 +68,16 @@ class LoginModal extends React.Component {
     //////開Phone number authentication with invisible ReCaptcha
 
   };
-  componentDidMount() {
-    //检测网络是否连接
-    // this.getStorage().done();
-    this.check_ID_Storage().done();
-  }
-  componentWillReceiveProps() {
-    //检测网络是否连接
-    // this.getStorage().done();
-    // this.check_ID_Storage().done();
-  }
+  // componentDidMount() {
+  //   //检测网络是否连接
+  //   // this.getStorage().done();
+  //   this.check_ID_Storage().done();
+  // }
+  // componentWillReceiveProps() {
+  //   //检测网络是否连接
+  //   // this.getStorage().done();
+  //   // this.check_ID_Storage().done();
+  // }
   check(str) { return str.length > 25 && str.length < 29 && str.match(/[0-9A-Za-z]+/).toString() == str; }
 
   onMessage(e) {
@@ -256,12 +256,16 @@ class LoginModal extends React.Component {
       <View >
 
         <TouchableOpacity
-          style={styles.bottomLoginSetup}
+          // style={styles.bottomLoginSetup}
           onPress={() => {
             this.setPhoneModalVisible(true)
           }} >
-          <Text>Login "&" Setup Modal</Text>
-        </TouchableOpacity>    
+ <View style={styles.Button}>
+          <Text style={styles.searchContent}>電話登入</Text>
+          {/* <Text style={styles.searchContent}>簽下去</Text> */}
+
+        </View>    
+            </TouchableOpacity>    
         <Modal
           animationType={"slide"}
           transparent={false}
@@ -404,6 +408,24 @@ const styles = StyleSheet.create({
     // backgroundColor: '#6E93',
 
 
-  }
+  },
+  Button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width * 0.6,
+    paddingVertical:10,
+    backgroundColor: '#F0F0F0',
+    borderRadius: 10,
+  },
+  searchIcon: {
+    width: 16,
+    height: 16,
+    marginRight: 6,
+  },
+  searchContent: {
+    color: '#7094B1',
+    fontSize: 20,
+  },
 });
 export default withNavigation(LoginModal);

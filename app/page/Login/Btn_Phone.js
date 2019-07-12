@@ -37,7 +37,7 @@ _retrieveData = async () => {
    
   <TouchableOpacity onPress={ this.handleClick}>
         <View style={styles.Button}>
-          <Text style={styles.searchContent}>電話登入</Text>
+          <Text style={styles.searchContent}>電話登入測試</Text>
           {/* <Text style={styles.searchContent}>簽下去</Text> */}
 
         </View>

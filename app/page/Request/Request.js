@@ -66,7 +66,9 @@ const items_Text = [
     children: [
       {
         profile_icon: require("../../img/account.png"),
+        // profile_name: "拉互依",
         profile_name: "拉互依",
+
         // id: 20,
       }
     ]
@@ -87,6 +89,17 @@ class ApplyLeaveForm extends React.Component {
       endModalVisible: false,
       userToken: "A",
       leaveReason: null,
+      userData: {
+        phoneNumber: "+886900000000",
+        jobTitle: "未登入使用者",
+        image: " ",
+        name: "未登入使用者",
+        team: "外部人員組",
+        workingType: "partTime",
+        verified: true,
+        permission: "Null",
+        gender: "female"
+      },
     };
     this.onStartDateChange = this.onStartDateChange.bind(this);
     this.onEndDateChange = this.onEndDateChange.bind(this);
@@ -95,18 +108,41 @@ class ApplyLeaveForm extends React.Component {
 
   componentDidMount() {
     this.getStorage().done();
+    this.getUserStorage().done();
+
+  }
+  componentWillMount(){
+    this.getStorage().done();
+    this.getUserStorage().done();
 
   }
 
+  getUserStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem('userData');
+      alert(this.state.userData.name);
+
+      if (value !== null) {
+        console.warn(value);
+        this.setState({ userData: value });
+        console.warn('請假取得userData', await AsyncStorage.getItem('userData'));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   getStorage = async () => {
     try {
-      const value = await AsyncStorage.getItem('userToken');
+      // const value = AsyncStorage.multiSet(["userToken","userData"] );
+
+          const value = await AsyncStorage.getItem('userToken');
       if (value !== null) {
         console.warn(value);
         this.setState({ userToken: value });
         this.JSON_Post();
         console.warn('再次', await AsyncStorage.getItem('userToken'));
         this.onPost();
+        this.getUserStorage().done();
 
       }
     } catch (error) {
@@ -201,7 +237,7 @@ class ApplyLeaveForm extends React.Component {
             <Image style={styles.profileImg} source={items_Text[0].children[0].profile_icon} />
           </View>
           <View style={styles.formItemName}>
-            <Text style={styles.profileName}>{items_Text[0].children[0].profile_name}</Text>
+            <Text style={styles.profileName}>{this.state.userData.name}</Text>
           </View>
         </View>
         <View style={styles.formContentSection}>

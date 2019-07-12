@@ -17,15 +17,16 @@ import {
 
 } from 'react-native';
 import { createBottomTabNavigator, SafeAreaView, createStackNavigator, withNavigation } from 'react-navigation';
-import { Dropdown } from 'react-native-material-dropdown';
-import CheckBox from 'react-native-check-box'
-import Btn_Login from './app/page/Login/Btn_Login';
+// import { Dropdown } from 'react-native-material-dropdown';
+// import CheckBox from 'react-native-check-box'
+// import Btn_Login from './app/page/Login/Btn_Login';
+
+// import LowModal from './app/page/MsgModal/LowModal';
 import Btn_Phone from './app/page/Login/Btn_Phone';
 
-import LowModal from './app/page/MsgModal/LowModal';
 import LoginModal from './app/page/MsgModal/LoginModal';
 
-import Login from './app/page/Login/Login';
+// import Login from './app/page/Login/Login';
 
 // 取得屏幕的宽高Dimensions
 const { width, height } = Dimensions.get('window');
@@ -269,6 +270,7 @@ export default class Login_index extends Component {
           this._storeData();
           this.setStorage();
         }} /> */}
+      <LoginModal/>
 
 <Button
           title="新"
@@ -298,14 +300,13 @@ export default class Login_index extends Component {
         </View> */}
 
 <Btn_Phone/>
-<LowModal/>
+{/* <LowModal/> */}
 
-          < View style={styles.bottmContainer}>
+          {/* < View style={styles.bottmContainer}>
 
           <Btn_Login />
-      </View>
+      </View> */}
 
-      <LoginModal/>
 
       </View >
       // </SafeAreaView>
