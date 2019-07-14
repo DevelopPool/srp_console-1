@@ -33,12 +33,14 @@ export default class Reply extends Component {
       isLoading: true,
       refreshing: false,
 
+
     };
   }
 
   componentDidMount() {
     this.getStorage().done();
 
+    
   }
 
   _onRefresh = () => {

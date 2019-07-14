@@ -58,6 +58,17 @@ class LoginModal extends React.Component {
       phone: 'bbbbb',
       userToken: "778TIlaNHBcW1lwvk3dZ1HuTuPv1",
       modalPhoneVisible: false,
+      userData: {
+        phoneNumber: "+886910927898",
+        jobTitle: "dayuan",
+        image: " ",
+        name: "dayuan",
+        team: "dayuan",
+        workingType: "partTime",
+        verified: true,
+        permission: "Null",
+        gender: "female"
+      }
 
     };
     this.onMessage = this.onMessage.bind(this);
@@ -80,6 +91,44 @@ class LoginModal extends React.Component {
   // }
   check(str) { return str.length > 25 && str.length < 29 && str.match(/[0-9A-Za-z]+/).toString() == str; }
 
+testID(){
+  var data = "778TIlaNHBcW1lwvk3dZ1HuTuPv1";
+var json= {
+  "excutionResult": "success",
+  "workAssignment": [],
+  "userData": {
+      "workingType": "partTime",
+      "verified": true,
+      "permission": "root",
+      "gender": "female",
+      "phoneNumber": "+886910927898",
+      "jobTitle": "supercoder",
+      "image": " ",
+      "name": "daYuan",
+      "team": "team101"
+  },
+  "leaveNote": []
+}
+var userData=JSON.stringify(json)
+  console.warn("event run")
+  // console.warn(event)
+
+  if (data.length > 25 && data.length < 29 && data.match(/[0-9A-Za-z]+/).toString() == data){
+    console.warn(data);
+     //设置多项
+  var keyValuePairs = [['userToken', data],['userData', userData]]
+  AsyncStorage.multiSet(keyValuePairs, function (errs) {
+    if (errs) {
+      //TODO：存储出错
+      return;
+    }
+    console.warn('userToken保存成功!');
+  });
+  }
+
+
+}
+
   onMessage(e) {
     var event =e.nativeEvent;
     var data = e.nativeEvent.data;
@@ -90,7 +139,7 @@ class LoginModal extends React.Component {
     if (data.length > 25 && data.length < 29 && data.match(/[0-9A-Za-z]+/).toString() == data){
       console.warn(data);
        //设置多项
-    var keyValuePairs = [['userToken', data]]
+    var keyValuePairs = [['userToken', data],['userData', this.state.userData]]
     AsyncStorage.multiSet(keyValuePairs, function (errs) {
       if (errs) {
         //TODO：存储出错
@@ -295,6 +344,17 @@ class LoginModal extends React.Component {
                 />
               </View>
 
+              <TouchableOpacity
+          // style={styles.bottomLoginSetup}
+          onPress={() => {
+            this.testID();
+          }} >
+ <View style={styles.Button}>
+          <Text style={styles.searchContent}>test登入</Text>
+          {/* <Text style={styles.searchContent}>簽下去</Text> */}
+
+        </View>    
+            </TouchableOpacity>    
               <View style={{
                 flex: 0.8, backgroundColor: "#2A2E43", alignItems: 'center',
                 alignItems: 'center',
@@ -429,3 +489,37 @@ const styles = StyleSheet.create({
   },
 });
 export default withNavigation(LoginModal);
+
+
+// 1.2 數據的持久化操作(RN上的sharedPreference與NSUserDefaults)
+// 1.2.1、說明
+// 1、RN不支持調用JS的fs包進行讀寫操作，它提供的是AsyncStorage API。
+// 2、該API只是一個簡單的鍵值對存儲系統。
+// 3、每一個AsyncStorage API都會返回一個JS的Promise對象。
+// 4、有回調函數。
+// 1.2.2 寫入數據與錯誤捕捉
+// 1、方法原型：static object setItem(key,value); 
+// 2、調用該方法可存入數據。
+// 3、可以通過AsyncStorage提供的multiSet來一次存儲多組數據。static object multiSet(aArray)方法。
+// 1.2.3 讀取數據
+// 1、調用getItem方法，原型為：static object getItem(aKey) 
+// 2、還可以通過調用getAllKeys獲取當前存儲的所有鍵，原型：static object getAllKeys([aCallback]) 
+// 3、還可以通過multiGet得到多個鍵對應的多個值。
+// 4、AsyncStorage存儲數據是無序的。
+// 1.2.4 刪除數據
+// 1、函數原型：static object removeItem(aKey) 
+// 2、還可以通過調用clear()函數刪除所有的數據。
+// 3、還可以通過調用multiRemove刪除多個對應的鍵和值。函數原型：static object multiRemove(aArray)
+// 1.2.5 修改數據
+// 1、提供了兩個方法進行該項操作：mergeItem(aKey,aValue)以及multiMerge(aArray)。
+// 2、需要注意的是：這兩個方法還不能跨平台使用，建議還是使用寫入方法對原來已經存在的鍵值進行覆蓋。
+// 1.2.6 JSON對象的存取
+// 存入：
+// 調用JSON.stringify(json)方法。
+// 讀取：調用JSON.parse(newJsonStr)。
+// 注意：在使用parse方法的時候，傳入的字符串必須嚴格遵守JSON語法，尾部的逗號是不允許出現的。
+
+// 作者：Alan想去月球
+// 链接：https://www.jianshu.com/p/857e14689276
+// 来源：简书
+// 简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。

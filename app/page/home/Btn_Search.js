@@ -12,17 +12,23 @@ class Btn_Search extends React.Component {
       connectionInfo: null,
       name: "",
       phone: "",
-      userData: {
-        phoneNumber: "+886900000000",
-        jobTitle: "未登入使用者",
-        image: " ",
-        name: "未登入使用者",
-        team: "外部人員組",
-        workingType: "partTime",
-        verified: true,
-        permission: "Null",
-        gender: "female"
-      },
+      userData:{
+        excutionResult: "success",
+        workAssignment: [],
+        userData: {
+          phoneNumber: "+886900000000",
+          jobTitle: "未登入使用者",
+          image: " ",
+          name: "未登入使用者",
+          team: "外部人員組",
+          workingType: "partTime",
+          verified: true,
+          permission: "Null",
+          gender: "female",
+        },
+        leaveNote: []
+    }
+    
     };
   }
 
@@ -41,18 +47,20 @@ class Btn_Search extends React.Component {
       }
     });
   }
+  
 
 
   getStorage = async () => {
     try {
       const value = await AsyncStorage.getItem('userData');
-      alert(this.state.userData.team);
+      var userData_A=JSON.parse(value)
+      // alert(userData);
 
       if (value !== null) {
-        console.warn(value);
-        this.setState({ userData: value });
+        console.warn(userData_A);
+        this.setState({ userData: userData_A });
         console.warn('top取得userData', await AsyncStorage.getItem('userData'));
-        console.warn('top取得userData', this.state.userData.team);
+        console.warn('top取得getItem(userData)', this.state.userData.userData.team);
       }
     } catch (error) {
       console.log(error);
@@ -89,7 +97,7 @@ class Btn_Search extends React.Component {
 
 
       // <TouchableOpacity onPress={() => { this.props.navigation.navigate('Registered') }}>
-      <TouchableOpacity onPress={() => { this.clear() }}>
+      <TouchableOpacity onPress={() => { this.getStorage() }}>
 
         {/* <View style={styles.searchBox}>
 {this.state.isConnected ? <Icon name={"link"}  style={styles.Icon} />: <Icon name={"unlink"}  style={styles.Icon} />}
@@ -108,7 +116,7 @@ class Btn_Search extends React.Component {
 
 
         <View style={styles.TitleBox}>
-          <Text style={styles.searchContent}>{this.state.userData.team}</Text>
+          <Text style={styles.searchContent}>{this.state.userData.userData.team}</Text>
         </View>
       </TouchableOpacity>
 

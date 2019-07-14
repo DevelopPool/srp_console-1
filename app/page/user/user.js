@@ -30,7 +30,7 @@ class Card_Top extends React.Component {
         return (
             <View style={styles.card_Top}>
                 <Image style={styles.profileImg} source={img} />
-                <Text style={{ padding: 15, fontSize: 32, color: '#4A667C' }}>{"拉互依"}</Text>
+                <Text style={{ padding: 15, fontSize: 32, color: '#4A667C' }}>{this.props.data}</Text>
                 {/* <Btn_Logout/> */}
                 <Btn_info />
             </View>
@@ -79,6 +79,23 @@ export default class User extends Component {
             ID:"A123456789",
             addr:"司馬庫斯部落",
             jobYear:"2019",
+            userData:{
+                excutionResult: "success",
+                workAssignment: [],
+                userData: {
+                  phoneNumber: "+886900000000",
+                  jobTitle: "未登入使用者",
+                  image: " ",
+                  name: "未登入使用者",
+                  team: "外部人員組",
+                  workingType: "partTime",
+                  verified: true,
+                  permission: "Null",
+                  gender: "female",
+                },
+                leaveNote: []
+            }
+            
 
 
         };
@@ -117,6 +134,32 @@ export default class User extends Component {
           console.log(error);
         }
       }
+      getUserStorage = async () => {
+        try {
+          const value = await AsyncStorage.getItem('userData');
+          var userData=JSON.parse(value)
+          // alert(userData);
+    
+          if (value !== null) {
+            console.warn(userData);
+            this.setState({ userData: userData });
+            console.warn('User頁面取得userData', await AsyncStorage.getItem('userData'));
+            console.warn('User頁面getItem(userData)', this.state.userData.userData.team);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    
+      componentDidMount() {
+
+      this.getUserStorage().done();
+      };
+      componentWillReceiveProps(){
+
+        this.getStorage().done();
+
+      };
 
 
     JSON_Post = () => {
@@ -175,7 +218,7 @@ export default class User extends Component {
                         <RefreshControl
                             refreshing={this.state.refreshing}
                             onRefresh={this._onRefresh} />}>
-                    <Card_Top />
+                    <Card_Top data={this.state.userData.userData.name} />
 
 
                     {/* <Button

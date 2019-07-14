@@ -89,17 +89,23 @@ class ApplyLeaveForm extends React.Component {
       endModalVisible: false,
       userToken: "A",
       leaveReason: null,
-      userData: {
-        phoneNumber: "+886900000000",
-        jobTitle: "未登入使用者",
-        image: " ",
-        name: "未登入使用者",
-        team: "外部人員組",
-        workingType: "partTime",
-        verified: true,
-        permission: "Null",
-        gender: "female"
-      },
+      userData:{
+        excutionResult: "success",
+        workAssignment: [],
+        userData: {
+          phoneNumber: "+886900000000",
+          jobTitle: "未登入使用者",
+          image: " ",
+          name: "未登入使用者",
+          team: "外部人員組",
+          workingType: "partTime",
+          verified: true,
+          permission: "Null",
+          gender: "female",
+        },
+        leaveNote: []
+    }
+      
     };
     this.onStartDateChange = this.onStartDateChange.bind(this);
     this.onEndDateChange = this.onEndDateChange.bind(this);
@@ -117,20 +123,25 @@ class ApplyLeaveForm extends React.Component {
 
   }
 
+
+
   getUserStorage = async () => {
     try {
       const value = await AsyncStorage.getItem('userData');
-      alert(this.state.userData.name);
+      var userData=JSON.parse(value)
+      // alert(userData);
 
       if (value !== null) {
-        console.warn(value);
-        this.setState({ userData: value });
-        console.warn('請假取得userData', await AsyncStorage.getItem('userData'));
+        console.warn(userData);
+        this.setState({ userData: userData });
+        console.warn('請假頁面取得userData', await AsyncStorage.getItem('userData'));
+        console.warn('請假頁面getItem(userData)', this.state.userData.userData.team);
       }
     } catch (error) {
       console.log(error);
     }
   }
+
   getStorage = async () => {
     try {
       // const value = AsyncStorage.multiSet(["userToken","userData"] );
@@ -237,7 +248,7 @@ class ApplyLeaveForm extends React.Component {
             <Image style={styles.profileImg} source={items_Text[0].children[0].profile_icon} />
           </View>
           <View style={styles.formItemName}>
-            <Text style={styles.profileName}>{this.state.userData.name}</Text>
+            <Text style={styles.profileName}>{this.state.userData.userData.name}</Text>
           </View>
         </View>
         <View style={styles.formContentSection}>
