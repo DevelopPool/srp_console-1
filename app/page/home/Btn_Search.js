@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, NetInfo, StyleSheet, TouchableOpacity, Image, Text, AsyncStorage, View, Dimensions } from 'react-native';
+import { Button, NetInfo, StyleSheet, Alert, TouchableOpacity, Image, Text, AsyncStorage, View, Dimensions } from 'react-native';
 import { withNavigation } from 'react-navigation';
 const { width, height } = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -12,7 +12,8 @@ class Btn_Search extends React.Component {
       connectionInfo: null,
       name: "",
       phone: "",
-      userData:{
+      userToken: "",
+      userData: {
         excutionResult: "success",
         workAssignment: [],
         userData: {
@@ -27,8 +28,8 @@ class Btn_Search extends React.Component {
           gender: "female",
         },
         leaveNote: []
-    }
-    
+      }
+
     };
   }
 
@@ -43,17 +44,41 @@ class Btn_Search extends React.Component {
           name: "",
           phone: ""
         });
-        alert('存储的数据已清除完毕!');
+        alert('存储的數據已清除完畢!');
       }
     });
-  }
-  
+    this.props.navigation.navigate("Login");
 
+  }
+  Logout() {
+    var _that = this;
+    Alert.alert('登出', '您確定要登出嗎？', [
+      // onPress={() => { this.Logout() }}
+      { text: "是，我要登出", onPress: () => this.clear() },
+      { text: "否，繼續使用", onPress: this.opntion2Selected },
+      // {text:"选项一", onPress:this.opntion1Selected},
+      // {text:"选项二", onPress:this.opntion2Selected},
+      // {text:"选项三", onPress:this.opntion3Selected},
+      // {text:"选项四", onPress:this.opntion4Selected},
+    ]);
+
+    // AsyncStorage.clear(function (err) {
+    //   if (!err) {
+    //     _that.setState({
+    //       name: "",
+    //       phone: ""
+    //     });
+    //     alert('存储的数据已清除完毕!');
+    //   }
+    // });
+  }
+
+  //Alert參考 http://www.hangge.com/blog/cache/detail_1745.html
 
   getStorage = async () => {
     try {
       const value = await AsyncStorage.getItem('userData');
-      var userData_A=JSON.parse(value)
+      var userData_A = JSON.parse(value)
       // alert(userData);
 
       if (value !== null) {
@@ -67,7 +92,55 @@ class Btn_Search extends React.Component {
     }
   }
 
-  componentWillReceiveProps(){
+  checkLogin = async () => {
+    try {
+      const value = await AsyncStorage.getItem('userToken');
+      if (value !== null) {
+        console.warn(value);
+        this.setState({ userToken: value });
+        console.warn('ＧＥＴ checkLogin', await AsyncStorage.getItem('userToken'));
+        this.JSON_Post();
+
+      }
+    } catch (error) {
+      console.log('ＧＥＴ checkLogin', error);
+    }
+  }
+
+  JSON_Post = () => {
+    // let url = 'https://asia-northeast1-test-cf2e8.cloudfunctions.net/postjson';
+    let url = 'https://us-central1-my-fuck-awesome-project.cloudfunctions.net/checkLogin';
+
+    fetch(url, {
+      method: 'POST',
+      // headers 加入 json 格式
+      headers: {
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({
+        "uid": this.state.userToken
+        // "uid": "778TIlaNHBcW1lwvk3dZ1HuTuPv1"
+      })
+    }).then((response) => {
+      return response.json();
+    }).then((jsonData) => {
+      console.warn(jsonData);
+      console.warn(jsonData.excutionResult);
+      if (jsonData.excutionResult == "success") {
+        Alert.alert("API checkLogin");
+      }
+      else {
+        Alert.alert("checkLogin 失敗",this.state.userToken, "請檢查網路或是重新登入");
+      }
+    }).catch((err) => {
+      console.warn('錯誤:', err);
+      Alert.alert("錯誤", "請檢查checkLogin網路");
+      // this.forceUpdate();
+    })
+  }
+
+  componentWillReceiveProps() {
     this.getStorage().done();
 
   };
@@ -75,6 +148,7 @@ class Btn_Search extends React.Component {
   //页面的组件渲染完毕（render）之后执行
   componentDidMount() {
     this.getStorage().done();
+    this.checkLogin().done();
 
     // //检测网络是否连接
     // NetInfo.isConnected.fetch().done((isConnected) => {
@@ -97,7 +171,7 @@ class Btn_Search extends React.Component {
 
 
       // <TouchableOpacity onPress={() => { this.props.navigation.navigate('Registered') }}>
-      <TouchableOpacity onPress={() => { this.getStorage() }}>
+      <TouchableOpacity onPress={() => { this.Logout() }}>
 
         {/* <View style={styles.searchBox}>
 {this.state.isConnected ? <Icon name={"link"}  style={styles.Icon} />: <Icon name={"unlink"}  style={styles.Icon} />}

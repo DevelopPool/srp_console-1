@@ -154,10 +154,11 @@ export default class User extends Component {
       componentDidMount() {
 
       this.getUserStorage().done();
+      this.getStorage().done();
+
       };
       componentWillReceiveProps(){
 
-        this.getStorage().done();
 
       };
 

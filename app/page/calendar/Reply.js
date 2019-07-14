@@ -11,6 +11,7 @@ import {
   Linking,
   ScrollView,
   TextInput,
+  Alert,
   Button,
   RefreshControl,
 } from 'react-native';
@@ -78,7 +79,20 @@ export default class Reply extends Component {
       return response.json()
     }).then((data) => {
       if (data.excutionResult == "success") {
-        console.warn(data.leaveNote)
+        if (data.leaveNote[1] == null) {
+          // console.warn(data.leaveNote,"尚未審核")
+          Alert.alert('提示', '目前尚未審核任何假單', [
+            // onPress={() => { this.Logout() }}
+            // { text: "是，我要登出", onPress: () => this.clear() },
+            { text: "好，我知道了", onPress: this.opntion1Selected },
+            // {text:"选项一", onPress:this.opntion1Selected},
+            // {text:"选项二", onPress:this.opntion2Selected},
+            // {text:"选项三", onPress:this.opntion3Selected},
+            // {text:"选项四", onPress:this.opntion4Selected},
+          ]);
+        }
+        console.warn(data.leaveNote,"審核")
+       
         this.setState({
           isLoading: false,
           leaveNote: data.leaveNote,

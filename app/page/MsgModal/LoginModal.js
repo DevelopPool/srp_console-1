@@ -92,8 +92,11 @@ class LoginModal extends React.Component {
   check(str) { return str.length > 25 && str.length < 29 && str.match(/[0-9A-Za-z]+/).toString() == str; }
 
 testID(){
-  var data = "778TIlaNHBcW1lwvk3dZ1HuTuPv1";
-var json= {
+  
+  var data = "9UDpS6D8TkNkTJ2S2c33MrlYbAY2";
+
+  // var data = "778TIlaNHBcW1lwvk3dZ1HuTuPv1";
+var json= {///測試用 可拔
   "excutionResult": "success",
   "workAssignment": [],
   "userData": {
@@ -109,25 +112,68 @@ var json= {
   },
   "leaveNote": []
 }
-var userData=JSON.stringify(json)
+var userData=JSON.stringify(json)///測試用 可拔
   console.warn("event run")
   // console.warn(event)
 
   if (data.length > 25 && data.length < 29 && data.match(/[0-9A-Za-z]+/).toString() == data){
-    console.warn(data);
-     //设置多项
-  var keyValuePairs = [['userToken', data],['userData', userData]]
-  AsyncStorage.multiSet(keyValuePairs, function (errs) {
-    if (errs) {
-      //TODO：存储出错
-      return;
-    }
-    console.warn('userToken保存成功!');
-  });
+  //   console.warn(data);
+  //    //设置多项
+  // var keyValuePairs = [['userToken', data],['userData', userData]]
+  // AsyncStorage.multiSet(keyValuePairs, function (errs) {
+  //   if (errs) {
+  //     //TODO：存储出错
+  //     return;
+  //   }
+
+  //   console.warn('userToken保存成功!');
+  // });
+  this.JSON_Post(data);
   }
-
-
 }
+
+JSON_Post (Token) {
+  let url = 'https://us-central1-my-fuck-awesome-project.cloudfunctions.net/getUserDetail';
+
+  fetch(url, {
+    method: 'POST',
+    // headers 加入 json 格式
+    headers: {
+      'Content-Type': 'application/json'
+    },
+
+    body: JSON.stringify({
+      "uid": Token
+      // "uid": "778TIlaNHBcW1lwvk3dZ1HuTuPv1"
+    })
+  }).then((response) => {
+    return response.json();
+  }).then((jsonData) => {
+    console.warn(jsonData);
+    console.warn(jsonData.excutionResult);
+    if (jsonData.excutionResult == "success") {
+      var userData=JSON.stringify(jsonData)
+
+      var keyValuePairs = [['userToken', Token],['userData', userData]]
+      AsyncStorage.multiSet(keyValuePairs, function (errs) {
+        if (errs) {
+          //TODO：存储出错
+          return;
+        }
+    
+        console.warn('userToken+userData保存成功NET!');
+      });
+    }
+    else {
+      Alert.alert("NET Login 失敗",this.state.userToken, "請檢查網路或是重新登入");
+    }
+  }).catch((err) => {
+    console.warn('錯誤:', err);
+    Alert.alert("錯誤", "請檢查Login網路");
+    // this.forceUpdate();
+  })
+}
+
 
   onMessage(e) {
     var event =e.nativeEvent;
@@ -145,7 +191,10 @@ var userData=JSON.stringify(json)
         //TODO：存储出错
         return;
       }
+      // this.props.navigation.push('Home')
+
       console.warn('userToken保存成功!');
+      
     });
     }
   
@@ -168,6 +217,7 @@ var userData=JSON.stringify(json)
     // alert(e);
 
   }
+
 
   // check_ID_Storage = async () => {
   //   //主動驗證是否登入
@@ -329,7 +379,7 @@ var userData=JSON.stringify(json)
             }}>
               <Text>Is the Phone Modal</Text>
 
-              <View style={{ width: width * 0.9, height: height * 0.5, backgroundColor: "white", padding: 10, borderRadius: 15, }}>
+              <View style={{ width: width * 0.9, height: height * 0.6, backgroundColor: "white", padding: 10, borderRadius: 15, }}>
 
                 <WebView
                   ref={(ref) => { this.webview = ref; }}
@@ -354,6 +404,10 @@ var userData=JSON.stringify(json)
           {/* <Text style={styles.searchContent}>簽下去</Text> */}
 
         </View>    
+
+        <Text>如果發生錯誤，請關閉頁面後重新操做</Text>
+
+
             </TouchableOpacity>    
               <View style={{
                 flex: 0.8, backgroundColor: "#2A2E43", alignItems: 'center',
@@ -473,8 +527,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    width: width * 0.6,
-    paddingVertical:10,
+    width: width * 0.8,
+    paddingVertical:15,
     backgroundColor: '#F0F0F0',
     borderRadius: 10,
   },

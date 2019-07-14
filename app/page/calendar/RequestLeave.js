@@ -77,7 +77,7 @@ export default class RequestLeave extends Component {
       return response.json()
     }).then((data) => {
       if (data.excutionResult == "success") {
-        console.warn(data.leaveNote)
+        console.warn(data.leaveNote,"leaveNote")
         this.setState({
           isLoading: false,
           leaveNote: data.leaveNote,

@@ -47,7 +47,7 @@ export default class Works extends Component {
             "_nanoseconds": 458000000
           },
           "modifyUser": "778TIlaNHBcW1lwvk3dZ1HuTuPv1",
-          "team": "睡覺時間到嘍！",
+          "team": "該睡覺嘍！",
           "worker": [
             "範例不工作",
             "範例沒同事"
@@ -108,6 +108,7 @@ export default class Works extends Component {
         if (jsonData.workAssignment[0] != null) {
 
           Alert.alert("更新成功");
+          console.warn(jsonData.workAssignment);
 
         this.setState({
           refreshing: false,

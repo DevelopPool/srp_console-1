@@ -31,7 +31,7 @@ _retrieveData = async () => {
     return (
     <View>
    
-  <TouchableOpacity onPress={ this._retrieveData}>
+  <TouchableOpacity  onPress={ this._retrieveData}>
         <View style={styles.Button}>
           <Text style={styles.searchContent}>首次登入記得點我註冊</Text>
           {/* <Text style={styles.searchContent}>簽下去</Text> */}
@@ -56,8 +56,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    width: width * 0.6,
-    paddingVertical:10,
+    width: width * 0.8,
+    paddingVertical:15,
+    
     backgroundColor: '#F0F0F0',
     borderRadius: 10,
   },

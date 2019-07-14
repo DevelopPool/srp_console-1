@@ -23,6 +23,9 @@ import { createBottomTabNavigator, SafeAreaView, createStackNavigator, withNavig
 
 // import LowModal from './app/page/MsgModal/LowModal';
 import Btn_Phone from './app/page/Login/Btn_Phone';
+import Btn_setup from './app/page/Login/Btn_setup';
+
+
 
 import LoginModal from './app/page/MsgModal/LoginModal';
 
@@ -270,8 +273,13 @@ export default class Login_index extends Component {
           this._storeData();
           this.setStorage();
         }} /> */}
-      <LoginModal/>
+              <LoginModal/>
+              {/* <Btn_Login /> */}
 
+                <View style={styles.bottmContainer}>
+      <Btn_setup/>
+      </View>
+{/* 
 <Button
           title="新"
           onPress={() => {
@@ -289,17 +297,16 @@ export default class Login_index extends Component {
             this.clear();
           }} />
          
+         <Btn_Phone/> */}
 
          
           {/* 
-        <View style={styles.bottmContainer}>
         <Login/>
     
      
 
         </View> */}
 
-<Btn_Phone/>
 {/* <LowModal/> */}
 
           {/* < View style={styles.bottmContainer}>
@@ -341,10 +348,12 @@ const styles = StyleSheet.create({
 
   bottmContainer: {
     height: 60,
-    flexDirection: 'row',
-    paddingHorizontal: 50,
-    paddingVertical: 10,
-    marginBottom: 30,
+    flexDirection: "column",
+    
+    paddingHorizontal: 20,
+    // paddingVertical: 10,
+    marginTop:20,
+    marginBottom: 70,
 
   },
   background: {
