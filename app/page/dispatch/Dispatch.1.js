@@ -169,13 +169,13 @@ export default class Ｄispatch extends Component {
             id: 13,
           }]
         },
-
+       
       ],
       loading: false,
       selectedItems: [],
       selectedItems2: [],
       selectedItemObjects: [
-
+        
       ],/////被選取的人員清單
       currentItems: [],
       showDropDowns: false,
@@ -195,18 +195,88 @@ export default class Ｄispatch extends Component {
     }
     this.termId = 100;
   }
-  // testA(){
-  //   this.setState({
-  //     selectedItems: this.state.currentItems,
-  //   })
-  // };
+// testA(){
+//   this.setState({
+//     selectedItems: this.state.currentItems,
+//   })
+// };
 
-
+}
 
 
   componentDidMount() {
+    const data = fetch('https://facebook.github.io/react-native/movies.json', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {//1
+      console.log(response);
+    }).catch((err) => {//2
+      console.error(err);
+    });
+    // const data = await fetch('https://demojson.herokuapp.com/cart').then(response => response.json());
+    this.setState({
+      album: data,
+    });
   }
 
+  getMoviesFromApiAsync() {
+    return fetch('https://facebook.github.io/react-native/movies.json')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // Alert.alert(responseJson.movies);
+
+        return responseJson.movies;
+      })
+      .catch((error) => {
+
+        console.error(error);
+      });
+
+  }
+  // onGet = () =>fetch('https://mywebsite.com/mydata.json')
+  onGet() {
+
+
+    fetch('https://us-central1-bt-fucking-good.cloudfunctions.net/user', {
+
+      //  fetch('https://facebook.github.io/react-native/movies.json', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => response.json())//1
+      .then((jsonData) => {//2
+        let title = jsonData.title;
+        let description = jsonData.description;
+        alert("title:" + title + "description" + description);
+      });
+  }
+
+  // {
+  //   "title": "The Basics - Networking",
+  //   "description": "Your app fetched this from a remote endpoint!",
+  //   "movies": [
+  //     { "id": "1", "title": "Star Wars", "releaseYear": "1977" },
+  //     { "id": "2", "title": "Back to the Future", "releaseYear": "1985" },
+  //     { "id": "3", "title": "The Matrix", "releaseYear": "1999" },
+  //     { "id": "4", "title": "Inception", "releaseYear": "2010" },
+  //     { "id": "5", "title": "Interstellar", "releaseYear": "2014" }
+  //   ]
+  // }
+
+  onPost = () => fetch('https://mywebsite.com/endpoint/', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      firstParam: 'yourValue',
+      secondParam: 'yourOtherValue',
+    })
+  })
 
 
   onCancel = () => {
@@ -255,71 +325,18 @@ export default class Ｄispatch extends Component {
     // Alert.alert(this.value);
 
   }
-  // testFun(){
-  //   this.state.myName='组件被刷新了';
-  // }
-  // testForceFun(){
-  //   this.forceUpdate();
-  // }
-  fetch_UserList = () => {
-    // let url = 'https://asia-northeast1-test-cf2e8.cloudfunctions.net/postjson';
-    let url = 'https://us-central1-my-fuck-awesome-project.cloudfunctions.net/getUserList';
-    fetch(url, {
-      method: 'POST',
-      // headers 加入 json 格式
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      // body 將 json 轉字串送出
-      // body: JSON.stringify({
-      //   email: 'lovef1232e@hexschool.com',
-      //   password: '12345678'
-      // })
-      body: JSON.stringify({
-        "uid": "9UDpS6D8TkNkTJ2S2c33MrlYbAY2"
-      })
-    }).then((response) => {
-      return response.json();
-    }).then((jsonData) => {
-      console.warn(jsonData);
-      console.warn(jsonData.excutionResult);
-
-
-      if (jsonData.excutionResult == "success") {
-        // Alert.alert ("指派成功",this.A+this.B+this.C+this.text);
-        console.warn("fetch_UserList成功");
-        // this.forceUpdate();
-let  data =[];
-        for (i = 0; i < jsonData.userList.length; i++) {
-          data.push(
-            {
-              "name": jsonData.userList[i].name,
-              "id": jsonData.userList[i].phoneNumber
-            }
-          );
-        };
-        this.setState({
-          items: data,
-        })
-      }
-      else {
-        Alert.alert("fetch_UserList失敗", "請檢查網路與欄位");
-        // this.forceUpdate();
-
-      }
-    }).catch((err) => {
-      console.warn('錯誤:', err);
-      Alert.alert("fetch失敗", "請檢查網路");
-      // this.forceUpdate();
-
-
-    })
+  testFun(){
+    this.state.myName='组件被刷新了';
   }
+  testForceFun(){
+    this.forceUpdate();
+  }
+ 
 
   JSON_Post = () => {
     // let url = 'https://asia-northeast1-test-cf2e8.cloudfunctions.net/postjson';
     let url = 'https://us-central1-my-fuck-awesome-project.cloudfunctions.net/addWork';
-    console.warn(this.A, this.B, this.C, this.text);
+    console.warn(this.A,this.B,this.C,this.text);
 
     fetch(url, {
       method: 'POST',
@@ -343,7 +360,7 @@ let  data =[];
         "workType": this.B,
         "workTime": this.C,
         "desc": this.text,
-        "worker": ["778TIlaNHBcW1lwvk3dZ1HuTuPv1"],
+        "worker":["778TIlaNHBcW1lwvk3dZ1HuTuPv1"],
         "uid": userToken,
 
         // "team":"農業組",
@@ -359,19 +376,19 @@ let  data =[];
       console.warn(jsonData);
       console.warn(jsonData.excutionResult);
 
-
-      if (jsonData.excutionResult == "success") {
-        Alert.alert("指派成功", this.A + this.B + this.C + this.text);
+      
+      if (jsonData.excutionResult=="success"){
+        Alert.alert ("指派成功",this.A+this.B+this.C+this.text);
         this.forceUpdate();
-      }
-      else {
-        Alert.alert("指派失敗", "請檢查網路與欄位", this.A + this.B + this.C + this.text);
-        this.forceUpdate();
+        }
+        else{
+          Alert.alert ("指派失敗","請檢查網路與欄位",this.A+this.B+this.C+this.text);
+          this.forceUpdate();
 
-      }
+        }
     }).catch((err) => {
       console.warn('錯誤:', err);
-      Alert.alert("指派失敗", "請檢查網路");
+      Alert.alert ("指派失敗","請檢查網路");
       this.forceUpdate();
 
 

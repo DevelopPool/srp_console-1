@@ -14,7 +14,6 @@ import {
   Button,
   TouchableHighlight,
   RefreshControl,
-
   Modal
 } from "react-native";
 

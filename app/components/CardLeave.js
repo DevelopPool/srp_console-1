@@ -13,7 +13,8 @@ import {
   Button,
   SafeAreaView,
   TouchableHighlight,
-  Modal
+  Modal,
+  Alert
 } from 'react-native';
 
 import Icon from "react-native-vector-icons/FontAwesome5";
@@ -61,6 +62,20 @@ export default class CardLeave extends Component {
         });
         console.warn('否:', data.excutionResult);
 
+      }
+      else if (data.excutionResult == "fail") {
+                /////有ＢＵＧ待修 bug
+                Alert.alert('提示', '您目前無法審核任何假單','請您確認網路或聯絡管理員' ,[
+                  // onPress={() => { this.Logout() }}
+                  // { text: "是，我要登出", onPress: () => this.clear() },
+                  { text: "好，我知道了", onPress: this.opntion1Selected },
+                  // {text:"选项一", onPress:this.opntion1Selected},
+                  // {text:"选项二", onPress:this.opntion2Selected},
+                  // {text:"选项三", onPress:this.opntion3Selected},
+                  // {text:"选项四", onPress:this.opntion4Selected},
+                ]);
+                console.warn('else if:', data.excutionResult);
+        
       }
       else {
         /////有ＢＵＧ待修 bug

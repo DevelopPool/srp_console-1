@@ -197,9 +197,15 @@ class ApplyLeaveForm extends React.Component {
     }).then((response) => {
       return response.json()
     }).then((data) => {
-      console.warn(data)
+      console.warn("這是：",data)
       if(data.excutionResult == "success") {
         Alert.alert ("請假成功");
+      }
+      else if(data.excutionResult == "fail") {
+        Alert.alert ("假單發送失敗");
+      }
+      else{
+        Alert.alert ("假單發送失敗");
       }
     }).catch((err)=> {
       console.warn('錯誤:',err)
