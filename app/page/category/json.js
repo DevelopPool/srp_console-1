@@ -23,7 +23,7 @@ for (i = 0; i < data.userList.length; i++) {
 
 
 
-for (i = 0; i++; i < data.userList.length) {
+for (i = 0; i < data.userList.length; i++) {
   this.setState({
     localDB: apiData,
   })

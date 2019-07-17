@@ -10,6 +10,7 @@ import {
   TextInput,
   Button,
   Picker,
+  AsyncStorage,
   Alert,
   TouchableOpacity,
   TouchableHighlight,
@@ -174,9 +175,7 @@ export default class Ｄispatch extends Component {
       loading: false,
       selectedItems: [],
       selectedItems2: [],
-      selectedItemObjects: [
-
-      ],/////被選取的人員清單
+      selectedItemObjects: [],/////被選取的人員清單
       currentItems: [],
       showDropDowns: false,
       single: false,
@@ -184,14 +183,14 @@ export default class Ｄispatch extends Component {
       highlightChildren: false,
       selectChildren: false,
       hasErrored: false,
+      workerList:[],
+      userToken:"",
       A: null,
       B: null,
       C: null,
       D: null,
       text: null,
       value: null,
-
-
     }
     this.termId = 100;
   }
@@ -205,9 +204,41 @@ export default class Ｄispatch extends Component {
 
 
   componentDidMount() {
+    // this.fetch_UserList();
+    // this.getStorage();
+    this.getStorage().done();
+    // this.checkLogin();
   }
 
+  getStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem('userToken');
+      if (value !== null) {
+        console.warn(value);
+        this.setState({ userToken: value });
+        this.fetch_UserList();
+        console.warn('再次', await AsyncStorage.getItem('userToken'));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  
+  }
+ 
+  checkLogin = async () => {
+    try {
+      const value = await AsyncStorage.getItem('userToken');
+      if (value !== null) {
+        console.warn(value);
+        this.setState({ userToken: value });
+        console.warn('ＧＥＴ checkLogin', await AsyncStorage.getItem('userToken'));
+        this.JSON_Post();
 
+      }
+    } catch (error) {
+      console.log('ＧＥＴ checkLogin', error);
+    }
+  }
 
   onCancel = () => {
     this.SectionedMultiSelect._removeAllItems()
@@ -244,11 +275,22 @@ export default class Ｄispatch extends Component {
 
   onSelectedItemObjectsChange = (selectedItemObjects) => {
     this.setState({ selectedItemObjects })
-    D = selectedItemObjects;
-    console.warn(selectedItemObjects)
-    console.warn(D)
-
+    // D = selectedItemObjects;
+    console.warn(selectedItemObjects+"我在這")
+    console.warn(JSON.stringify(selectedItemObjects)+"我在這JSON")
+    // console.warn(D)
+    // data=selectedItemObjects;
+    let workerList = [];
+    for (i = 0; i < selectedItemObjects.length; i++) {
+      let txt= selectedItemObjects[i].id
+         workerList.push(
+            txt
+         );
+       };
+    this.setState({workerList:workerList});
+    console.warn(this.state.workerList+"你在這")
   }
+
 
   onChangeValue = () => {
     // Alert.alert(this.group_value);
@@ -276,7 +318,8 @@ export default class Ｄispatch extends Component {
       //   password: '12345678'
       // })
       body: JSON.stringify({
-        "uid": "9UDpS6D8TkNkTJ2S2c33MrlYbAY2"
+        // "uid": "9UDpS6D8TkNkTJ2S2c33MrlYbAY2"
+         "uid":this.state.userToken,
       })
     }).then((response) => {
       return response.json();
@@ -289,7 +332,7 @@ export default class Ｄispatch extends Component {
         // Alert.alert ("指派成功",this.A+this.B+this.C+this.text);
         console.warn("fetch_UserList成功");
         // this.forceUpdate();
-let  data =[];
+        let data = [];
         for (i = 0; i < jsonData.userList.length; i++) {
           data.push(
             {
@@ -297,9 +340,28 @@ let  data =[];
               "id": jsonData.userList[i].phoneNumber
             }
           );
-        };
+        }
+        // let aa=[{
+        //   name: "男",
+        //   id: +886912345679,
+        // }, {
+        //   name: "女",
+        //   id: +886912345670,
+        // }, {
+        //   name: "其他",
+        //   id: +886910927898,
+        // }];
+
+        let DB = [
+          {
+            name: "成員",
+            id: 0,
+            children: data
+          }
+        ]
+
         this.setState({
-          items: data,
+          items: DB,
         })
       }
       else {
@@ -343,8 +405,8 @@ let  data =[];
         "workType": this.B,
         "workTime": this.C,
         "desc": this.text,
-        "worker": ["778TIlaNHBcW1lwvk3dZ1HuTuPv1"],
-        "uid": userToken,
+        "worker":  this.state.workerList,
+        "uid": this.state.userToken,
 
         // "team":"農業組",
         // "workType":"1",
@@ -418,7 +480,7 @@ let  data =[];
       value: '女',
     }];
     let time_data = [{
-      value: '早上',
+      value: '上午',
     }, {
       value: '中午',
     }, {
@@ -490,6 +552,14 @@ let  data =[];
 </Picker>
    */}
           <Button
+            title="TOKEN更新"
+            onPress={() => {
+              // this.setState({album: data})
+              console.warn("TOKEN更新"); // gives new value OK          
+              this.getStorage().done();
+            }}
+          />
+          <Button
             title="更新"
             onPress={() => {
               // this.setState({album: data})
@@ -501,8 +571,9 @@ let  data =[];
               console.warn(this.D); // gives new value OK
               console.warn(this.text); // gives new value OK
 
-              this.JSON_Post()
+              // this.JSON_Post()
 
+              this.checkLogin();
 
               // onPress={() => { this.onGet()}}
 
@@ -657,19 +728,19 @@ let  data =[];
     );
   };
 
-  get() {
-    fetch('http://ip.taobao.com/service/getIpInfo.php?ip=59.108.23.12', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => response.json())//1
-      .then((jsonData) => {//2
-        let country = jsonData.data.country;
-        let city = jsonData.data.city;
-        alert("country:" + country + "-------city:" + city);
-      });
-  }
+  // get() {
+  //   fetch('http://ip.taobao.com/service/getIpInfo.php?ip=59.108.23.12', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }).then((response) => response.json())//1
+  //     .then((jsonData) => {//2
+  //       let country = jsonData.data.country;
+  //       let city = jsonData.data.city;
+  //       alert("country:" + country + "-------city:" + city);
+  //     });
+  // }
 }
 
 const styles = StyleSheet.create({
