@@ -56,7 +56,8 @@ class LoginModal extends React.Component {
       text: 'Useless Placeholder',
       name: 'aaaaa',
       phone: 'bbbbb',
-      userToken: "778TIlaNHBcW1lwvk3dZ1HuTuPv1",
+      // userToken: "778TIlaNHBcW1lwvk3dZ1HuTuPv1",
+      userToken: "",
       modalPhoneVisible: false,
       userData: {
         phoneNumber: "+886910927898",
@@ -131,50 +132,6 @@ var userData=JSON.stringify(json)///測試用 可拔
   this.JSON_Post(data);
   }
 }
-
-JSON_Post (Token) {
-  let url = 'https://us-central1-my-fuck-awesome-project.cloudfunctions.net/getUserDetail';
-
-  fetch(url, {
-    method: 'POST',
-    // headers 加入 json 格式
-    headers: {
-      'Content-Type': 'application/json'
-    },
-
-    body: JSON.stringify({
-      "uid": Token
-      // "uid": "778TIlaNHBcW1lwvk3dZ1HuTuPv1"
-    })
-  }).then((response) => {
-    return response.json();
-  }).then((jsonData) => {
-    console.warn(jsonData);
-    console.warn(jsonData.excutionResult);
-    if (jsonData.excutionResult == "success") {
-      var userData=JSON.stringify(jsonData)
-
-      var keyValuePairs = [['userToken', Token],['userData', userData]]
-      AsyncStorage.multiSet(keyValuePairs, function (errs) {
-        if (errs) {
-          //TODO：存储出错
-          return;
-        }
-    
-        console.warn('userToken+userData保存成功NET!');
-      });
-    }
-    else {
-      Alert.alert("NET Login 失敗",this.state.userToken, "請檢查網路或是重新登入");
-    }
-  }).catch((err) => {
-    console.warn('錯誤:', err);
-    Alert.alert("錯誤", "請檢查Login網路");
-    // this.forceUpdate();
-  })
-}
-
-
   onMessage(e) {
     var event =e.nativeEvent;
     var data = e.nativeEvent.data;
@@ -184,41 +141,64 @@ JSON_Post (Token) {
 
     if (data.length > 25 && data.length < 29 && data.match(/[0-9A-Za-z]+/).toString() == data){
       console.warn(data);
+      this.JSON_Post(data);
+      console.warn('userDATA保存成功!');
        //设置多项
-    var keyValuePairs = [['userToken', data],['userData', this.state.userData]]
-    AsyncStorage.multiSet(keyValuePairs, function (errs) {
-      if (errs) {
-        //TODO：存储出错
-        return;
-      }
-      // this.props.navigation.push('Home')
+    // var keyValuePairs = [['userToken', data]]
+    // AsyncStorage.multiSet(keyValuePairs, function (errs) {
+    //   if (errs) {
+    //     //TODO：存储出错
+    //     return;
+    //   }
+    //   console.warn('userToken保存成功!');
+    //   // this.props.navigation.push('Home')
 
-      console.warn('userToken保存成功!');
-      
-    });
+    // });
     }
-  
-
-      // var data=JSON.parse(event.data);
-
-    // alert(e);
-    //+886910927898
-
-    // var event =e.nativeEvent;
-    //   var data=JSON.parse(event.data);
-
-    // var event = e.nativeEvent;
-    // var data = JSON.parse(even);
-    // alert(data);
-    // console.warn(data)
-
-    // this.setState({ userToken: "'"+e+"'" });
-    // alert("data");
-    // alert(e);
-
   }
 
 
+  JSON_Post (Token) {
+    let url = 'https://us-central1-my-fuck-awesome-project.cloudfunctions.net/getUserDetail';
+  
+    fetch(url, {
+      method: 'POST',
+      // headers 加入 json 格式
+      headers: {
+        'Content-Type': 'application/json'
+      },
+  
+      body: JSON.stringify({
+        "uid": Token
+        // "uid": "778TIlaNHBcW1lwvk3dZ1HuTuPv1"
+      })
+    }).then((response) => {
+      return response.json();
+    }).then((jsonData) => {
+      console.warn(jsonData);
+      console.warn(jsonData.excutionResult);
+      if (jsonData.excutionResult == "success") {
+        var userData=JSON.stringify(jsonData)
+  
+        var keyValuePairs = [['userToken', Token],['userData', userData]]
+        AsyncStorage.multiSet(keyValuePairs, function (errs) {
+          if (errs) {
+            //TODO：存储出错
+            return;
+          }
+      
+          console.warn('userToken+userData保存成功NET!');
+        });
+      }
+      else {
+        Alert.alert("NET Login 失敗",this.state.userToken, "請檢查網路或是重新登入");
+      }
+    }).catch((err) => {
+      console.warn('錯誤:', err);
+      Alert.alert("錯誤", "請檢查Login網路");
+      // this.forceUpdate();
+    })
+  }
   // check_ID_Storage = async () => {
   //   //主動驗證是否登入
   //   try {
@@ -399,11 +379,10 @@ JSON_Post (Token) {
           onPress={() => {
             this.testID();
           }} >
- <View style={styles.Button}>
+ {/* <View style={styles.Button}>
           <Text style={styles.searchContent}>test登入</Text>
-          {/* <Text style={styles.searchContent}>簽下去</Text> */}
-
-        </View>    
+///測試用電話登入
+        </View>     */}
 
         <Text>如果發生錯誤，請關閉頁面後重新操做</Text>
 
