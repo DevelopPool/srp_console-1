@@ -16,7 +16,7 @@ class Btn_Login_set extends React.Component {
 _retrieveData = async () => {
   try {
 
-      this.props.navigation.push('Home') 
+      this.props.navigation.push('Login') 
 
     
    } catch (error) {

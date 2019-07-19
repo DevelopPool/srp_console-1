@@ -130,19 +130,19 @@ export default class App extends Component<Props> {
     let group_data = [{
       value: '房務組', key: '房務組',
     }, {
-      value: '餐廳組',
+      value: '餐廳組', key: '餐廳組',
     }, {
-      value: '生態組',
+      value: '生態組', key: '生態組',
     }, {
-      value: '工程組',
+      value: '工程組', key: '工程組',
     }, {
-      value: '農業組',
+      value: '農業組', key: '農業組',
     }, {
-      value: '修繕組',
+      value: '修繕組', key: '修繕組',
     }, {
-      value: '交管組',
+      value: '交管組', key: '交管組',
     }, {
-      value: '其他',
+      value: '其他', key: '其他',
     }];
     let if_fulltime_data = [{
       value: 'fullTime',
@@ -213,14 +213,28 @@ export default class App extends Component<Props> {
 
  */}
 
-        <Btn_Login_set onPress={() => {
+        {/* <Btn_Login_set onPress={() => {
 
           this.JSON_Post()
-        }} />
+        }} /> */}
+          <TouchableOpacity onPress={()=>{
+              this.JSON_Post()
+              this.props.navigation.push('Login') 
+          }}>
+        <View style={styles.button}>
+          <Text style={styles.searchContent}>註冊</Text>
+          {/* <Text style={styles.searchContent}>簽下去</Text> */}
 
-        <Button
+        </View>
+      </TouchableOpacity>
+     
+
+        {/* <Button
           title="更新"
           onPress={() => {
+            this.JSON_Post()
+            this.props.navigation.push('Login') 
+
             // this.setState({album: data})
 
             // console.warn(this.state.Te); // gives new value OK
@@ -238,7 +252,7 @@ export default class App extends Component<Props> {
 
 
           }}
-        />
+        /> */}
       </View>
     );
   }
@@ -263,6 +277,15 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 25,
     margin: 50
+  },
+  searchIcon: {
+    width: 16,
+    height: 16,
+    marginRight: 6,
+  },
+  searchContent: {
+    color: '#7094B1',
+    fontSize: 20,
   },
   welcome: {
     fontSize: 20,
