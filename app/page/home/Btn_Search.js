@@ -100,6 +100,8 @@ class Btn_Search extends React.Component {
         this.setState({ userToken: value });
         console.warn('ＧＥＴ checkLogin', await AsyncStorage.getItem('userToken'));
         this.JSON_Post();
+        this.getStorage().done();
+
 
       }
     } catch (error) {
@@ -147,7 +149,6 @@ class Btn_Search extends React.Component {
 
   //页面的组件渲染完毕（render）之后执行
   componentDidMount() {
-    this.getStorage().done();
     this.checkLogin().done();
 
     // //检测网络是否连接
